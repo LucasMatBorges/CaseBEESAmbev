@@ -1,4 +1,4 @@
-from airflow.models.baseoperator import BaseOperatorLink
+from airflow.models.baseoperatorlink import BaseOperatorLink
 from airflow.models.xcom import XCom
 
 

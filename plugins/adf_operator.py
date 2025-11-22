@@ -3,7 +3,7 @@ from airflow.utils.decorators import apply_defaults
 from azure.mgmt.datafactory import DataFactoryManagementClient
 from azure.identity import ClientSecretCredential
 
-from .adf_links import ADFPipelineRunLink
+from adf_links import ADFPipelineRunLink
 
 
 class TriggerADFOperator(BaseOperator):
@@ -32,13 +32,13 @@ class TriggerADFOperator(BaseOperator):
         self.tenant_id = tenant_id
 
     def execute(self, context):
-        cred = ClientSecretCredential(
+        credential = ClientSecretCredential(
             client_id=self.client_id,
             client_secret=self.client_secret,
             tenant_id=self.tenant_id,
         )
 
-        client = DataFactoryManagementClient(cred, self.subscription_id)
+        client = DataFactoryManagementClient(credential, self.subscription_id)
 
         run = client.pipelines.create_run(
             self.resource_group,
@@ -49,6 +49,6 @@ class TriggerADFOperator(BaseOperator):
         run_id = run.run_id
         self.log.info(f"Triggered ADF Pipeline. Run ID: {run_id}")
 
-        context['ti'].xcom_push(key="adf_run_id", value=run_id)
+        context["ti"].xcom_push(key="adf_run_id", value=run_id)
 
         return run_id
