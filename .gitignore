@@ -1,0 +1,11 @@
+# Environment variables
+.env
+
+# Airflow logs
+logs/
+
+# Python cache folders
+__pycache__/
+plugins/__pycache__/
+dags/__pycache__/
+

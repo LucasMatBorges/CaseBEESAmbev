@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bees-airflow
+    env_file: .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./airflow-db:/opt/airflow/database   # PERSISTÊNCIA REAL
+    restart: always
+    command: ["bash", "-c", "export AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/database/airflow.db && /create_admin.sh && airflow standalone"]

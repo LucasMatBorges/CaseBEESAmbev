@@ -1,0 +1,4 @@
+requests==2.32.3
+pandas==2.2.3
+azure-identity==1.17.1
+azure-storage-file-datalake==12.15.0
