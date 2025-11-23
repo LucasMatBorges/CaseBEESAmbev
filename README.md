@@ -25,8 +25,12 @@ The objective is to demonstrate an end-to-end pipeline from data ingestion to cl
 ---
 
 ## 🧱 2. System Architecture
+1. **Open Brewery API**
+2. **Airflow** – Scheduling, retries, logs
+3. **Azure Data Factory** – Monitoring + triggers Databricks
+4. **Databricks** – Bronze → Silver → Gold
+5. **SQL / Delta Tables** – Final client-facing layer
 ---
-
 ## 🧰 3. Technology Stack
 
 | Component | Purpose |
@@ -53,8 +57,6 @@ The objective is to demonstrate an end-to-end pipeline from data ingestion to cl
 /bronze/breweries/date=YYYY-MM-DD/raw.json
 
 
----
-
 ### 🥈 Silver Layer – Standardized Data
 - Implemented in Databricks using PySpark.
 - Cleaning steps include:
@@ -64,8 +66,6 @@ The objective is to demonstrate an end-to-end pipeline from data ingestion to cl
   - Adding metadata: `ingest_date`, `ingest_timestamp`
 - Stored as **Delta/Parquet**
 - Partitioned by **country/state**
-
----
 
 ### 🥇 Gold Layer – Aggregated Analytics
 - Aggregates brewery counts by:
@@ -170,44 +170,22 @@ Gold table is published for final consumption:
 SELECT *
 FROM gold_breweries
 ORDER BY country, state, brewery_type;
-
+```
+---
 ▶️ 10. How to Run
-1. Start Airflow
-docker-compose up --build
+1. **Start Airflow**   ```docker-compose up --build```
 
-2. Trigger ADF Pipeline
-Through ADF UI or REST API.
+2. **Trigger ADF Pipeline**   Through ADF UI or REST API.
 
-2. Trigger ADF Pipeline
+3. **Databricks Executes Transformations**  Runs Bronze → Silver → Gold notebooks.
 
-Through ADF UI or REST API.
+4. **Run Tests**   Navigate to /tests in Databricks and run each notebook.
 
-3. Databricks Executes Transformations
 
-Runs Bronze → Silver → Gold notebooks.
 
-4. Run Tests
-
-Navigate to /tests in Databricks and run each notebook.
-
-5. Query the Gold Table
-Use SQL:
-SELECT * FROM bees.brewery_gold;
-
-🏁 11. Final Result
-
-This repository demonstrates a complete production-grade data pipeline, including:
-
-✔ API ingestion
-✔ Orchestration (Airflow)
-✔ Monitoring (ADF)
-✔ Medallion transformation (Databricks)
-✔ Modular PySpark logic
-✔ Unit tests
-✔ Delta Lake storage
-✔ SQL publishing
-✔ GitHub integration
-✔ End-to-end execution
+5. **Query the Gold Table**
+  Use SQL:
+```SELECT * FROM bees.brewery_gold;```
 
 
 
