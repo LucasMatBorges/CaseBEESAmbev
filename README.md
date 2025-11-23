@@ -82,9 +82,8 @@ The objective is to demonstrate an end-to-end pipeline from data ingestion to cl
 ## 🧩 5. Modular Functions & Unit Testing
 
 All transformation logic is implemented as pure functions inside `src/`:
-src/
-silver_logic.py
-gold_logic.py
+- `silver_logic.py`
+- `gold_logic.py`
 
 
 This design ensures:
@@ -94,9 +93,8 @@ This design ensures:
 
 ### ✔ Unit Tests
 Located in `tests/`, executed inside Databricks:
-tests/
-test_silver_logic
-test_gold_logic
+- `test_silver_logic`
+- `test_gold_logic`
 
 
 Tests validate:
@@ -134,8 +132,8 @@ Tests validate:
 - Retry logic  
 - Task logs  
 - XCom metadata  
-- Email alerts (configurable)
-
+- Email alerts
+  
 ### ADF
 - Monitoring dashboard  
 - Alerts for pipeline failures  
@@ -155,10 +153,6 @@ GitHub stores:
 - Transformation functions  
 - Unit tests  
 - Docker files  
-
-A Personal Access Token (PAT) is used for:
-repo, workflow, read:user
-
 
 ---
 
